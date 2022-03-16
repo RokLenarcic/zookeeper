@@ -20,6 +20,7 @@ package org.apache.zookeeper.version;
 
 public class VersionInfoMain implements org.apache.zookeeper.version.Info {
     public static void main(String[] args) {
+        // aa
         System.out.println("Apache ZooKeeper, version ${project.version} ${build.time}");
     }
 }
