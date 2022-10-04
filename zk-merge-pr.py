@@ -32,7 +32,6 @@ import os
 import re
 import subprocess
 import sys
-import testtest
 import urllib.request, urllib.error, urllib.parse
 import getpass
 
@@ -89,7 +88,7 @@ def get_json(url):
             print("Unable to fetch URL, exiting: %s" % url)
         sys.exit(-1)
 
-
+xxxxx
 def fail(msg):
     print(msg)
     clean_up()
