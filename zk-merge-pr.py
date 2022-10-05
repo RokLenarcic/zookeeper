@@ -89,6 +89,7 @@ def get_json(url):
         sys.exit(-1)
 
 xxxxx
+tttttt
 def fail(msg):
     print(msg)
     clean_up()
