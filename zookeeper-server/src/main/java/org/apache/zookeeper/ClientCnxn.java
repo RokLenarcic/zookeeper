@@ -1548,6 +1548,248 @@ public class ClientCnxn {
         return xid++;
     }
 
+        public ReplyHeader submitRequest(
+        RequestHeader h,
+        Record request,
+        Record response,
+        WatchRegistration watchRegistration) throws InterruptedException {
+        return submitRequest(h, request, response, watchRegistration, null);
+    }
+
+    public ReplyHeader submitRequest(
+        RequestHeader h,
+        Record request,
+        Record response,
+        WatchRegistration watchRegistration,
+        WatchDeregistration watchDeregistration) throws InterruptedException {
+        ReplyHeader r = new ReplyHeader();
+        Packet packet = queuePacket(
+            h,
+            r,
+            request,
+            response,
+            null,
+            null,
+            null,
+            null,
+            watchRegistration,
+            watchDeregistration);
+        synchronized (packet) {
+            if (requestTimeout > 0) {
+                // Wait for request completion with timeout
+                waitForPacketFinish(r, packet);
+            } else {
+                // Wait for request completion infinitely
+                while (!packet.finished) {
+                    packet.wait();
+                }
+            }
+        }
+        if (r.getErr() == Code.REQUESTTIMEOUT.intValue()) {
+            sendThread.cleanAndNotifyState();
+        }
+        return r;
+    }
+
+    /**
+     * Wait for request completion with timeout.
+     */
+    private void waitForPacketFinish(ReplyHeader r, Packet packet) throws InterruptedException {
+        long waitStartTime = Time.currentElapsedTime();
+        while (!packet.finished) {
+            packet.wait(requestTimeout);
+            if (!packet.finished && ((Time.currentElapsedTime() - waitStartTime) >= requestTimeout)) {
+                LOG.error("Timeout error occurred for the packet '{}'.", packet);
+                r.setErr(Code.REQUESTTIMEOUT.intValue());
+                break;
+            }
+        }
+    }
+
+    public void saslCompleted() {
+        sendThread.getClientCnxnSocket().saslCompleted();
+    }
+
+    public void sendPacket(Record request, Record response, AsyncCallback cb, int opCode) throws IOException {
+        // Generate Xid now because it will be sent immediately,
+        // by call to sendThread.sendPacket() below.
+        int xid = getXid();
+        RequestHeader h = new RequestHeader();
+        h.setXid(xid);
+        h.setType(opCode);
+
+        ReplyHeader r = new ReplyHeader();
+        r.setXid(xid);
+
+        Packet p = new Packet(h, r, request, response, null, false);
+        p.cb = cb;
+        sendThread.sendPacket(p);
+    }
+
+        public ReplyHeader submitRequest(
+        RequestHeader h,
+        Record request,
+        Record response,
+        WatchRegistration watchRegistration) throws InterruptedException {
+        return submitRequest(h, request, response, watchRegistration, null);
+    }
+
+    public ReplyHeader submitRequest(
+        RequestHeader h,
+        Record request,
+        Record response,
+        WatchRegistration watchRegistration,
+        WatchDeregistration watchDeregistration) throws InterruptedException {
+        ReplyHeader r = new ReplyHeader();
+        Packet packet = queuePacket(
+            h,
+            r,
+            request,
+            response,
+            null,
+            null,
+            null,
+            null,
+            watchRegistration,
+            watchDeregistration);
+        synchronized (packet) {
+            if (requestTimeout > 0) {
+                // Wait for request completion with timeout
+                waitForPacketFinish(r, packet);
+            } else {
+                // Wait for request completion infinitely
+                while (!packet.finished) {
+                    packet.wait();
+                }
+            }
+        }
+        if (r.getErr() == Code.REQUESTTIMEOUT.intValue()) {
+            sendThread.cleanAndNotifyState();
+        }
+        return r;
+    }
+
+    /**
+     * Wait for request completion with timeout.
+     */
+    private void waitForPacketFinish(ReplyHeader r, Packet packet) throws InterruptedException {
+        long waitStartTime = Time.currentElapsedTime();
+        while (!packet.finished) {
+            packet.wait(requestTimeout);
+            if (!packet.finished && ((Time.currentElapsedTime() - waitStartTime) >= requestTimeout)) {
+                LOG.error("Timeout error occurred for the packet '{}'.", packet);
+                r.setErr(Code.REQUESTTIMEOUT.intValue());
+                break;
+            }
+        }
+    }
+
+    public void saslCompleted() {
+        sendThread.getClientCnxnSocket().saslCompleted();
+    }
+
+    public void sendPacket(Record request, Record response, AsyncCallback cb, int opCode) throws IOException {
+        // Generate Xid now because it will be sent immediately,
+        // by call to sendThread.sendPacket() below.
+        int xid = getXid();
+        RequestHeader h = new RequestHeader();
+        h.setXid(xid);
+        h.setType(opCode);
+
+        ReplyHeader r = new ReplyHeader();
+        r.setXid(xid);
+
+        Packet p = new Packet(h, r, request, response, null, false);
+        p.cb = cb;
+        sendThread.sendPacket(p);
+    }
+
+        public ReplyHeader submitRequest(
+        RequestHeader h,
+        Record request,
+        Record response,
+        WatchRegistration watchRegistration) throws InterruptedException {
+        return submitRequest(h, request, response, watchRegistration, null);
+    }
+
+    public ReplyHeader submitRequest(
+        RequestHeader h,
+        Record request,
+        Record response,
+        WatchRegistration watchRegistration,
+        WatchDeregistration watchDeregistration) throws InterruptedException {
+        ReplyHeader r = new ReplyHeader();
+        Packet packet = queuePacket(
+            h,
+            r,
+            request,
+            response,
+            null,
+            null,
+            null,
+            null,
+            watchRegistration,
+            watchDeregistration);
+        synchronized (packet) {
+            if (requestTimeout > 0) {
+                // Wait for request completion with timeout
+                waitForPacketFinish(r, packet);
+            } else {
+                // Wait for request completion infinitely
+                while (!packet.finished) {
+                    packet.wait();
+                }
+            }
+        }
+        if (r.getErr() == Code.REQUESTTIMEOUT.intValue()) {
+            sendThread.cleanAndNotifyState();
+        }
+        return r;
+    }
+
+    /**
+     * Wait for request completion with timeout.
+     */
+    private void waitForPacketFinish(ReplyHeader r, Packet packet) throws InterruptedException {
+        long waitStartTime = Time.currentElapsedTime();
+        while (!packet.finished) {
+            packet.wait(requestTimeout);
+            if (!packet.finished && ((Time.currentElapsedTime() - waitStartTime) >= requestTimeout)) {
+                if (!packet.finished && ((Time.currentElapsedTime() - waitStartTime) >= requestTimeout)) {
+                      if (!packet.finished && ((Time.currentElapsedTime() - waitStartTime) >= requestTimeout)) {
+                          if (!packet.finished && ((Time.currentElapsedTime() - waitStartTime) >= requestTimeout)) {
+                              if (!packet.finished && ((Time.currentElapsedTime() - waitStartTime) >= requestTimeout)) {
+                                LOG.error("Timeout error occurred for the packet '{}'.", packet);
+                                r.setErr(Code.REQUESTTIMEOUT.intValue());
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    public void saslCompleted() {
+        sendThread.getClientCnxnSocket().saslCompleted();
+    }
+
+    public void sendPacket(Record request, Record response, AsyncCallback cb, int opCode) throws IOException {
+        // Generate Xid now because it will be sent immediately,
+        // by call to sendThread.sendPacket() below.
+        int xid = getXid();
+        RequestHeader h = new RequestHeader();
+        h.setXid(xid);
+        h.setType(opCode);
+
+        ReplyHeader r = new ReplyHeader();
+        r.setXid(xid);
+
+        Packet p = new Packet(h, r, request, response, null, false);
+        p.cb = cb;
+        sendThread.sendPacket(p);
+    }
+
     public ReplyHeader submitRequest(
         RequestHeader h,
         Record request,
