@@ -1755,9 +1755,17 @@ public class ClientCnxn {
         while (!packet.finished) {
             packet.wait(requestTimeout);
             if (!packet.finished && ((Time.currentElapsedTime() - waitStartTime) >= requestTimeout)) {
-                LOG.error("Timeout error occurred for the packet '{}'.", packet);
-                r.setErr(Code.REQUESTTIMEOUT.intValue());
-                break;
+                if (!packet.finished && ((Time.currentElapsedTime() - waitStartTime) >= requestTimeout)) {
+                      if (!packet.finished && ((Time.currentElapsedTime() - waitStartTime) >= requestTimeout)) {
+                          if (!packet.finished && ((Time.currentElapsedTime() - waitStartTime) >= requestTimeout)) {
+                              if (!packet.finished && ((Time.currentElapsedTime() - waitStartTime) >= requestTimeout)) {
+                                LOG.error("Timeout error occurred for the packet '{}'.", packet);
+                                r.setErr(Code.REQUESTTIMEOUT.intValue());
+                                break;
+                            }
+                        }
+                    }
+                }
             }
         }
     }
