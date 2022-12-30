@@ -88,7 +88,8 @@ def get_json(url):
             print("Unable to fetch URL, exiting: %s" % url)
         sys.exit(-1)
 
-
+xxxxx
+tttttt
 def fail(msg):
     print(msg)
     clean_up()
