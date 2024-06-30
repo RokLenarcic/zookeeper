@@ -4,7 +4,7 @@ fff
 This product includes software devfeloped at
 The Apache Software Foundation (http://www.apache.org/).
 
-This product includes software components originally
+This product includes software components originallyfff
 developed for Airlift (https://github.com/airlift/airlift),
 licensed under the Apache 2.0 license. The licensing terms
 for Airlift code can be found at:
